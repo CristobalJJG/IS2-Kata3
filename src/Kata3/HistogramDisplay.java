@@ -13,8 +13,11 @@ import org.jfree.ui.ApplicationFrame;
 
 public class HistogramDisplay extends ApplicationFrame {
     
-    public HistogramDisplay() {
+    private Histogram<String> histogram;
+    
+    public HistogramDisplay(Histogram<String> histogram) {
         super("Histograma");
+        this.histogram = histogram;
         setContentPane(createPanel());
         pack();    
     }
@@ -26,6 +29,7 @@ public class HistogramDisplay extends ApplicationFrame {
     private JPanel createPanel(){
         ChartPanel chartPanel = new ChartPanel(createChart(createDataset()));
         setPreferredSize(new Dimension(500,400));
+        
         return chartPanel;
     }
     
@@ -37,18 +41,19 @@ public class HistogramDisplay extends ApplicationFrame {
                 PlotOrientation.VERTICAL,
                 false,
                 false,
-                rootPaneCheckingEnabled);   
+                rootPaneCheckingEnabled); 
+        
         return chart;
         
     }
     
     private DefaultCategoryDataset createDataset(){
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset(); 
-        dataSet.addValue( 2., "", "ulpgc.es");
-        dataSet.addValue( 8., "", "nano.ulpgc");
-        dataSet.addValue( 3., "", "hotmail.com");
-        dataSet.addValue( 6., "", "hotmail.es");
-        dataSet.addValue( 4., "", "gmail.com");
+        
+        for (String key : histogram.keySet()) {
+            dataSet.addValue(histogram.get(key), "", key);
+        }
+        
         return dataSet;
     }
     
