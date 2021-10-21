@@ -1,0 +1,8 @@
+package Kata3;
+
+public class Kata3 {
+    public static void main(String[] args){
+        HistogramDisplay hist = new HistogramDisplay();
+        hist.execute();        
+    }
+}
